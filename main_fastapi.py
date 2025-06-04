@@ -5,7 +5,7 @@ from fastapi import FastAPI, Depends
 from api_models.loanApplication import LoanApplication
 from di import DI
 from usecases.interfaces.iGetApplicationStatusUseCase import IGetApplicationStatusUseCase
-from usecases.interfaces.iProcessApplicationUseCase import IProcessApplicationUseCase
+from usecases.interfaces.iSubmitApplicationUseCase import ISubmitApplicationUseCase
 from usecases.useCaseResult import UseCaseResult
 
 app = FastAPI()
@@ -19,7 +19,7 @@ async def about():
 @app.post("/application/")
 async def submit_application(
         application: LoanApplication,
-        usecase: IProcessApplicationUseCase = Depends(DI().submit_application_usecase)
+        usecase: ISubmitApplicationUseCase = Depends(DI().submit_application_usecase)
 ):
     result: UseCaseResult = await usecase.execute(application)
     return {
